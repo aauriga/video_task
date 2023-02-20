@@ -16,8 +16,10 @@ Including another URLconf
 from django.views.generic.base import RedirectView
 from django.contrib import admin
 from django.urls import path
+from django.urls import include, path, reverse_lazy
 
 urlpatterns = [
+    path('django_task/', include('django_task.urls', namespace='django_task')),
     path('', RedirectView.as_view(url='/admin/'), name='index'),
     path('admin/', admin.site.urls),
 ]

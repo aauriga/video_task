@@ -55,3 +55,9 @@ python manage.py createsuperuser
 # ################################################################################
 git fetch origin
 git checkout 2-setup-admin
+
+
+
+git clone https://github.com/morlandi/django-task.git
+
+pip install django-task/.
