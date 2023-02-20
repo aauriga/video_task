@@ -51,3 +51,7 @@ python manage.py migrate
 python manage.py createsuperuser
 
 # password is: ....123
+
+# ################################################################################
+git fetch origin
+git checkout 2-setup-admin
