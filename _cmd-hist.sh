@@ -50,7 +50,8 @@ python manage.py migrate
 
 python manage.py createsuperuser
 
-# password is: ....123
+# password is:.....123
+# Uservername is admin
 
 # ################################################################################
 git fetch origin
