@@ -50,7 +50,7 @@ python manage.py migrate
 
 python manage.py createsuperuser
 
-# password is:.....123
+# password is:predictif
 # Uservername is admin
 
 # ################################################################################
