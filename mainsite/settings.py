@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
+import sys
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     'video_tasks',
     # 'django_rq',  # optional (not needed when using TaskThreaded)
     'django_task',
+    'django_task_example_02',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -132,3 +135,72 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # set for models.ImafeField to work
 MEDIA_URL = '/fieldfiles/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'fieldfiles')
+
+
+# ##############################################################################
+#   Echo helpers
+
+def settings_echo(message, title='', error=False, warning=False):
+    """
+    Helpers to display a message
+    """
+    # Avoid echoing twice when executing runserver
+    if os.environ.get('RUN_MAIN') is None:
+        if error:
+            prefix = "\x1b[41;37m"
+        elif warning:
+            prefix = "\x1b[43;30m"
+        else:
+            prefix = "\x1b[47;30m"
+        suffix = " \x1b[0m"
+        if title:
+            print(prefix + str(title) + ':' + suffix, file=sys.stderr, end ="")
+        print(prefix + str(message) + suffix, file=sys.stderr,)
+
+# ##############################################################################
+INSTANCE_PREFIX = "example"
+
+SESSION_COOKIE_NAME = INSTANCE_PREFIX + '_sid'
+
+settings_echo(INSTANCE_PREFIX, title='INSTANCE_PREFIX')
+settings_echo(SESSION_COOKIE_NAME, title='SESSION_COOKIE_NAME')
+
+#
+# Redis config
+#
+
+#REDIS_URL = 'redis://localhost:6379/0'
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
+redis_port = 6379
+REDIS_URL = 'redis://%s:%d/0' % (redis_host, redis_port)
+settings_echo(REDIS_URL, title='REDIS_URL')
+
+
+RQ_SHOW_ADMIN_LINK = False
+DJANGOTASK_LOG_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'protected', 'tasklog'))
+DJANGOTASK_ALWAYS_EAGER = False
+DJANGOTASK_JOB_TRACE_ENABLED = False
+DJANGOTASK_REJECT_IF_NO_WORKER_ACTIVE_FOR_QUEUE = True
+
+QUEUE_DEFAULT = INSTANCE_PREFIX + '_default'
+QUEUE_LOW = INSTANCE_PREFIX + '_low'
+QUEUE_HIGH = INSTANCE_PREFIX + '_high'
+
+RQ_QUEUES = {
+    QUEUE_DEFAULT: {
+        'URL': REDIS_URL,
+        #'PASSWORD': 'some-password',
+        #'DEFAULT_TIMEOUT': 5 * 60,
+        'DEFAULT_TIMEOUT': -1,  # -1 means infinite
+    },
+    QUEUE_LOW: {
+        'URL': REDIS_URL,
+        #'ASYNC': False,
+        'DEFAULT_TIMEOUT': 10 * 60,
+    },
+    QUEUE_HIGH: {
+        'URL': REDIS_URL,
+        'DEFAULT_TIMEOUT': 500,
+    },
+}
+

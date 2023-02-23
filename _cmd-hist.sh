@@ -25,7 +25,7 @@ docker run -itd \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v ~/.aws:/root/.aws \
     -v ~/Dropbox/work-0/-general/qc:/root/notebooks/QC \
-    -v /Users/marian.dumitrascu/Dropbox/work-P/video-tasks:/root/video-tasks \
+    -v ~/Dropbox/work-P/video-tasks:/root/video-tasks \
     predictif/devbox-x64:001 /bin/bash -c "\
     jupyter notebook \
     --notebook-dir=~/notebooks --ip='*' --port=8888 \
@@ -39,6 +39,7 @@ pip install django
 django-admin startproject mainsite .
 
 python manage.py startapp video_tasks
+python manage.py startapp django_task_example_02
 
 python manage.py runserver 8080
 
