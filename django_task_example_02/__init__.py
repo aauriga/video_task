@@ -1,0 +1,1 @@
+default_app_config = 'django_task_example_02.apps.DjangoTaskExample02Config'

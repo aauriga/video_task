@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     # 'django_rq',  # optional (not needed when using TaskThreaded)
     'django_task',
     'django_task_example_02',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
             ],
         },
     },
@@ -164,6 +165,11 @@ SESSION_COOKIE_NAME = INSTANCE_PREFIX + '_sid'
 
 settings_echo(INSTANCE_PREFIX, title='INSTANCE_PREFIX')
 settings_echo(SESSION_COOKIE_NAME, title='SESSION_COOKIE_NAME')
+
+### celery settings ###
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+###
 
 #
 # Redis config

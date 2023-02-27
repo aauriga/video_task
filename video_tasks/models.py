@@ -20,7 +20,7 @@ class Task(models.Model):
     end_time = models.DateTimeField(null=True, blank=True)
     upload_time_choices = (
         ('now', 'now'),
-        ('regular', 'regular')
+        ('scheduled', 'scheduled')
     )
     time_zone_choices = (
         ('utc', 'utc'),
@@ -32,7 +32,7 @@ class Task(models.Model):
         ('akst', 'akst')
     )
     time_zone = models.CharField(max_length=5, choices=time_zone_choices, default='cst')
-    upload_time = models.CharField(max_length=20, choices=upload_time_choices, default='regular')
+    upload_time = models.CharField(max_length=20, choices=upload_time_choices, default='scheduled')
     completed = models.BooleanField(default=False)
 
     # add start_ and end_time fields with minutes precision
